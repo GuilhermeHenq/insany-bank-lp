@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useBlog } from "@/context/BlogContext";
-import BlogCard from "./BlogCard";
+import BlogCard from "../components/BlogCard";
 import { useState, useEffect, useRef } from "react";
 
 const Section = styled.section`
@@ -38,6 +38,7 @@ const Heading = styled.div`
       text-align: center;
       margin-top: -23px;
       margin-bottom: 29px;
+      width: 238px;
     }
   }
 `;
@@ -71,7 +72,7 @@ const ArrowGroup = styled.div`
   }
 
   @media (max-width: 768px) {
-    margin-top: 24px;
+    display: none
   }
 `;
 
@@ -80,8 +81,19 @@ const ScrollWrapper = styled.div`
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  padding: 24px; 24px;
   scroll-behavior: smooth;
+
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    padding-left: 46px;
+    padding-right: 24px;
+  }
 
   @media (min-width: 769px) {
     overflow: visible;
@@ -127,7 +139,7 @@ const PaginationDots = styled.div`
   }
 
   @media (max-width: 768px) {
-    display: none;
+    margin-top: 10px;
   }
 `;
 
@@ -142,11 +154,26 @@ export default function BlogSection() {
   const [page, setPage] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const mobileScrollRef = useRef<HTMLDivElement | null>(null);
+  const [mobilePage, setMobilePage] = useState(0);
+
+  const handleMobileScroll = () => {
+    if (!mobileScrollRef.current) return;
+
+    const scrollLeft = mobileScrollRef.current.scrollLeft;
+    const cardWidth = 280 + 32;
+    const currentIndex = Math.round(scrollLeft / cardWidth);
+
+    setMobilePage(currentIndex);
+  };
+
 
   const postsPerPageDesktop = 4;
 
   const postsPerPage = postsPerPageDesktop;
-  const totalPages = Math.ceil(posts.length / postsPerPage);
+  const totalPages = isMobile
+    ? posts.length
+    : Math.ceil(posts.length / postsPerPage);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -215,12 +242,13 @@ export default function BlogSection() {
       ) : (
         <>
           {isMobile ? (
-            <ScrollWrapper ref={mobileScrollRef}>
+            <ScrollWrapper ref={mobileScrollRef} onScroll={handleMobileScroll}>
               <Grid as="div">
-                {posts.map((post) => (
+                <div style={{ width: "12px", flexShrink: 0 }} />
+                {posts.map((post, index) => (
                   <BlogCard
                     key={post.id}
-                    id={post.id}
+                    postId={post.id}
                     title={post.title.rendered}
                     slug={post.slug}
                     imageUrl={post._embedded?.["wp:featuredmedia"]?.[0]?.source_url}
@@ -231,6 +259,8 @@ export default function BlogSection() {
                 ))}
               </Grid>
             </ScrollWrapper>
+
+
           ) : (
             <>
               <Grid>
@@ -242,7 +272,7 @@ export default function BlogSection() {
                   .map((post) => (
                     <BlogCard
                       key={post.id}
-                      id={post.id}
+                      postId={post.id}
                       title={post.title.rendered}
                       slug={post.slug}
                       imageUrl={post._embedded?.["wp:featuredmedia"]?.[0]?.source_url}
@@ -252,17 +282,22 @@ export default function BlogSection() {
                     />
                   ))}
               </Grid>
-
-              <PaginationDots>
-                {Array.from({ length: totalPages }).map((_, index) => (
-                  <span
-                    key={index}
-                    className={index === page ? "active" : ""}
-                  />
-                ))}
-              </PaginationDots>
             </>
           )}
+
+          <PaginationDots>
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <span
+                key={index}
+                className={
+                  isMobile
+                    ? index === mobilePage ? "active" : ""
+                    : index === page ? "active" : ""
+                }
+              />
+            ))}
+          </PaginationDots>
+
         </>
       )}
     </Section>

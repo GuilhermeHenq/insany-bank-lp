@@ -22,13 +22,14 @@ export type BlogContextType = {
   isLoading: boolean;
 };
 
-export type BlogCardProps = {
-  id: number;
+export interface BlogCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  postId: number;
   title: string;
   slug: string;
   imageUrl?: string;
   date: string;
   authorName: string;
   authorAvatar?: string;
-};
+}
+
 

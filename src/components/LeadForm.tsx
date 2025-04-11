@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+import { Button } from "../components/Button";
 
 const FormWrapper = styled(motion.div)`
   background: #ffffff;
@@ -17,6 +18,9 @@ const FormWrapper = styled(motion.div)`
     padding: 24px;
     width: 100%;
     max-width: 327px;
+    margin-bottom: -75px;
+    box-shadow: 0px 30px 50px -10px rgba(28, 33, 63, 0.2);
+    z-index: 999;
   }
 `;
 
@@ -35,7 +39,7 @@ const LabelTop = styled.span`
 const Heading = styled.h3`
   font-size: 24px;
   font-weight: 600;
-  color: #0D0B1A;
+  color: #0d0b1a;
 `;
 
 const Toggle = styled.div`
@@ -69,14 +73,14 @@ const Toggle = styled.div`
     }
 
     input[type="radio"]:checked {
-      border-color: #1D63FF;
+      border-color: #1d63ff;
     }
 
     input[type="radio"]:checked::before {
       content: "";
       width: 8px;
       height: 8px;
-      background-color: #1D63FF;
+      background-color: #1d63ff;
       border-radius: 50%;
       display: block;
     }
@@ -87,7 +91,7 @@ const Toggle = styled.div`
     }
 
     input[type="radio"]:checked + span {
-      color: #0D0B1A;
+      color: #0d0b1a;
     }
   }
 `;
@@ -104,7 +108,7 @@ const Field = styled.input`
   height: 56px;
   padding: 16px;
   font-size: 14px;
-  color: #0D0B1A;
+  color: #0d0b1a;
   background: #f2f5fc;
   border: none;
   border-radius: 6px;
@@ -119,28 +123,6 @@ const Field = styled.input`
     border: 2px solid rgba(29, 99, 255, 0.2);
     background: #ffffff;
     color: #000;
-  }
-`;
-
-const Button = styled.button`
-  width: 100%;
-  height: 56px;
-  background-color: #1d63ff;
-  color: white;
-  font-weight: 600;
-  font-size: 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  padding: 16px;
-
-  &:hover {
-    background-color: #1149cc;
-  }
-
-  &:disabled {
-    background-color: #94a3b8;
-    cursor: not-allowed;
   }
 `;
 
@@ -159,7 +141,7 @@ const InfoText = styled.p`
 const Divider = styled.div`
   width: 100%;
   height: 2px;
-  background-color: #CBD6E2;
+  background-color: #cbd6e2;
   opacity: 0.4;
 `;
 
@@ -169,7 +151,7 @@ const SuccessInfo = styled.div`
   gap: 14px;
   font-weight: 400;
   font-size: 14px;
-  color: #1E1C2D;
+  color: #1e1c2d;
   margin-top: 27px;
 `;
 
@@ -196,16 +178,19 @@ export default function LeadForm() {
   const isEmailValid = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const isNameValid = (name: string) =>
-    /^[A-Za-zÀ-ÿ\s']+$/.test(name.trim());
+  const isNameValid = (name: string) => /^[A-Za-zÀ-ÿ\s']+$/.test(name.trim());
 
-  const isPhoneValid = (phone: string) =>
-    /^[0-9\s\-()+]{8,}$/.test(phone);
+  const isPhoneValid = (phone: string) => /^[0-9\s\-()+]{8,}$/.test(phone);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.phone || (formType === "personal" && !formData.name) || (formType === "company" && !formData.cnpj)) {
+    if (
+      !formData.email ||
+      !formData.phone ||
+      (formType === "personal" && !formData.name) ||
+      (formType === "company" && !formData.cnpj)
+    ) {
       toast.error("Preencha todos os campos obrigatórios!");
       return;
     }
@@ -226,9 +211,7 @@ export default function LeadForm() {
     }
 
     setLoading(true);
-
     await new Promise((res) => setTimeout(res, 2000));
-
     toast.success("Formulário enviado com sucesso!");
     setFormData({ name: "", email: "", phone: "", cnpj: "" });
     setLoading(false);
@@ -304,7 +287,18 @@ export default function LeadForm() {
             onChange={handleChange}
           />
 
-          <Button type="submit" disabled={loading}>
+          <Button
+            type="submit"
+            fontSize="14px"
+            height="56px"
+            padding="16px"
+            fontWeight={600}
+            disabled={loading}
+            responsiveStyles={`
+              font-size: 16px;
+              padding: 18px;
+            `}
+          >
             {loading
               ? "Enviando..."
               : formType === "personal"
@@ -315,8 +309,8 @@ export default function LeadForm() {
       </form>
 
       <InfoText>
-        Ao enviar seus dados, você autoriza que o SmartMoney entre em contato e declara estar ciente da{" "}
-        <a href="#">Política de Privacidade</a>.
+        Ao enviar seus dados, você autoriza que o SmartMoney entre em contato e
+        declara estar ciente da <a href="#">Política de Privacidade</a>.
       </InfoText>
 
       <Divider />

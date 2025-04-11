@@ -6,6 +6,14 @@ import Footer from "../../sections/Footer";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Post } from "@/types/blog";
+import { createClient } from 'next-sanity';
+
+const sanityClient = createClient({
+  projectId: '5w8bb9pl',
+  dataset: 'production',
+  apiVersion: '2025-01-01',
+  useCdn: false,
+});
 
 const PostWrapper = styled.main`
   background: white;
@@ -277,30 +285,56 @@ export default function PostPage({ post }: PostPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch("https://devblog.insanydesign.com/wp-json/wp/v2/posts?_embed");
-  const posts = await res.json();
+  const wpRes = await fetch("https://devblog.insanydesign.com/wp-json/wp/v2/posts?_embed");
+  const wpPosts = await wpRes.json();
 
-  const paths = posts.map((post: Post) => ({
-    params: { slug: post.slug },
-  }));
+  const sanityQuery = `*[_type == "post"]{ slug }`;
+  const sanityPosts = await sanityClient.fetch(sanityQuery);
+
+  const paths = [
+    ...wpPosts.map((post: any) => ({ params: { slug: post.slug } })),
+    ...sanityPosts.map((post: any) => ({ params: { slug: post.slug.current } })),
+  ];
 
   return { paths, fallback: true };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string;
-  const res = await fetch(`https://devblog.insanydesign.com/wp-json/wp/v2/posts?slug=${slug}&_embed`);
-  const posts = await res.json();
-  const post = posts[0];
 
-  if (!post) {
-    return { notFound: true };
+  const wpRes = await fetch(`https://devblog.insanydesign.com/wp-json/wp/v2/posts?slug=${slug}&_embed`);
+  const wpPosts = await wpRes.json();
+
+  if (wpPosts.length > 0) {
+    return {
+      props: {
+        post: wpPosts[0],
+        source: 'wordpress',
+      },
+      revalidate: 60,
+    };
   }
+
+  const sanityQuery = `*[_type == "post" && slug.current == $slug][0]{
+    title,
+    slug,
+    excerpt,
+    mainImage,
+    body,
+    author,
+    _createdAt
+  }`;
+
+  const post = await sanityClient.fetch(sanityQuery, { slug });
+
+  if (!post) return { notFound: true };
 
   return {
     props: {
       post,
+      source: 'sanity',
     },
     revalidate: 60,
   };
 };
+

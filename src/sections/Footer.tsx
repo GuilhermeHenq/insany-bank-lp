@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { toast } from 'react-toastify';
+import { Button } from "../components/Button";
 
 
 const FooterContainer = styled.footer`
@@ -74,20 +75,6 @@ const Newsletter = styled.div`
       }
     }
 
-    button {
-      background-color: #1D63FF;
-      color: white;
-      font-weight: 500;
-      border: none;
-      border-radius: 6px;
-      padding: 12px 24px;
-      cursor: pointer;
-      transition: 0.3s;
-
-      &:hover {
-        background-color: #2848f0;
-      }
-    }
   }
 
   @media (max-width: 768px) {
@@ -342,7 +329,22 @@ export default function Footer(props: Props) {
               name="email"
               placeholder="Insira seu melhor e-mail"
             />
-            <button type="submit">Receber Novidades</button>
+            <Button
+              type="submit"
+              variant="primary"
+              width="159px"
+              fontSize="14px"
+              fontWeight={600}
+              height="auto"
+              padding="10px 16px"
+              responsiveStyles={`
+                width: 327px;
+                height: 64px;
+              `}
+            >
+              Receber Novidades
+            </Button>
+
           </form>
         </Newsletter>
 

@@ -1,6 +1,13 @@
 import styled from "styled-components";
-import LeadForm from "./LeadForm";
-import { FaStar } from "react-icons/fa";
+import LeadForm from "../components/LeadForm";
+import { CountUp } from "../components/CountUp"; 
+
+
+type CountUpProps = {
+  to: number;
+  duration?: number;
+};
+
 
 const Section = styled.section`
   background: #080611;
@@ -209,17 +216,20 @@ export default function HeroSection(props: Props) {
 
           <Stats>
             <Stat>
-              <strong>120</strong>
+              <strong><CountUp to={120} /></strong>
               <p>Projeto realizado 2021</p>
             </Stat>
             <Stat>
-              <strong>12</strong>
+              <strong><CountUp to={12} /></strong>
               <p>Escritórios no Brasil</p>
             </Stat>
             <Stat>
-              <strong>15mi</strong>
+              <strong>
+                <CountUp to={15} />mi
+              </strong>
               <p>Faturamento 2021</p>
             </Stat>
+
           </Stats>
         </Headline>
       </Left>

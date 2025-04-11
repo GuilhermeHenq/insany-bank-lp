@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button } from "../components/Button";
 
 const Wrapper = styled.section`
   display: flex;
@@ -32,10 +33,12 @@ const Box = styled.div`
 `;
 
 const Icon = styled.img`
-  height: 30px;
+  height: 64px;
+  witdh: 64px;
 
   @media (max-width: 768px) {
-    height: 30px;
+    height: 64px;
+    witdh: 64px;
   }
 `;
 
@@ -128,7 +131,20 @@ export default function TwoBanners() {
             Pellentesque urna commodo, elementum, est nullam.
           </Description>
         </Text>
-        <PrimaryButton>Quero ser cliente</PrimaryButton>
+        <Button
+          variant="primary"
+          width="237px"
+          height="56px"
+          padding="12px 24px"
+          fontSize="14px"
+          fontWeight={600}
+          responsiveStyles={`
+            width: 100%;
+          `}
+        >
+          Quero ser cliente
+        </Button>
+
       </Box>
 
       <Divider />
@@ -141,7 +157,21 @@ export default function TwoBanners() {
             Pellentesque urna commodo, elementum, est nullam.
           </Description>
         </Text>
-        <OutlinedButton>Fale conosco</OutlinedButton>
+        <Button
+          variant="outline"
+          width="237px"
+          height="56px"
+          padding="12px 24px"
+          fontSize="14px"
+          fontWeight={600}
+          responsiveStyles={`
+            width: 100%;
+            margin-bottom: 64px;
+          `}
+        >
+          Fale conosco
+        </Button>
+
       </Box>
     </Wrapper>
   );

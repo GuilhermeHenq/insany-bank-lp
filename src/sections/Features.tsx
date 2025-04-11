@@ -1,5 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { useEffect, useState } from "react";
+import { Button } from "../components/Button";
+import { motion } from "framer-motion";
 
 const features = [
   {
@@ -61,7 +63,8 @@ const Title = styled.h2`
 
   @media (max-width: 768px) {
     font-size: 24px;
-    margin: 0 33px 48px;
+    width: 281px;
+    margin: 0 auto 48px auto;
     text-align: center;
   }
 `;
@@ -200,7 +203,10 @@ const WomanImage = styled.img`
   }
 `;
 
-const Tag = styled.div`
+const Tag = styled(motion.div)`
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
   position: absolute;
   left: -33px;
   bottom: 34px;
@@ -295,6 +301,23 @@ const Star = styled.div`
   }
 `;
 
+const ButtonWrapper = styled.div`
+  position: absolute;
+  top: 170px;
+  right: 112px;
+
+  @media (max-width: 768px) {
+    position: relative;
+    top: auto;
+    right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 327px;
+    margin: 32px auto 0;
+  }
+`;
+
 type Props = React.HTMLAttributes<HTMLElement>;
 
 export default function Features(props: Props) {
@@ -320,7 +343,17 @@ export default function Features(props: Props) {
           </FeatureBox>
         ))}
 
-        <BlueButton>Quero ser cliente</BlueButton>
+        <ButtonWrapper>
+          <Button
+            fontSize="16px"
+            height="56px"
+            width="276px"
+            padding="12px 39px"
+            fontWeight={600}
+          >
+            Quero ser cliente
+          </Button>
+        </ButtonWrapper>
       </Left>
 
       <Right>
@@ -328,12 +361,23 @@ export default function Features(props: Props) {
           <Overflow>
             <WomanImage src="/images/woman-img.png" alt="Cliente feliz usando celular" />
           </Overflow>
-          <Tag>
+          <Tag
+            animate={{
+              y: [0, -8, 0],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              type: "tween",
+            }}
+          >
             <Star>
               <img src="/icons/Star.svg" />
             </Star>
             Tecnologia disruptiva
           </Tag>
+
           <ArrowTop src="/images/arrow-direction.png" alt="Seta para o botão" />
           <ArrowBottom src="/images/arrow-directionR.png" alt="Seta para o stack" />
         </WomanImageWrapper>

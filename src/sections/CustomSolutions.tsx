@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Button } from "../components/Button";
+import { motion } from "framer-motion";
 
 const Section = styled.section`
   display: flex;
@@ -99,6 +101,11 @@ const Left = styled.div`
 
   @media (max-width: 768px) {
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 327px;
 
     h2 {
       font-size: 24px;
@@ -106,6 +113,7 @@ const Left = styled.div`
       font-weight: 600;
       line-height: 1.25;
       margin-bottom: 8px;
+      margin-top: 84px;
     }
 
     p {
@@ -115,6 +123,7 @@ const Left = styled.div`
     }
 
     ul {
+      width: 327px;
       list-style: none;
       padding: 0;
       margin: 0;
@@ -149,13 +158,21 @@ const Right = styled.div`
   background-size: cover;
   background-position: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 499px) {
     position: relative;
     width: 229px;
     height: 300.26px;
     top: 0;
     margin-left: auto;
     margin-right: 0;
+  }
+
+  @media (min-width: 500px) and (max-width: 768px) {
+    position: relative;
+    width: 229px;
+    height: 300.26px;
+    top: 0;
+    margin: 0 auto;
   }
 `;
 
@@ -175,7 +192,10 @@ const WomanImage = styled.img`
   }
 `;
 
-const FloatingCard = styled.div`
+const FloatingCard = styled(motion.div)`
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
   width: 278px;
   height: 185px;
   position: absolute;
@@ -360,7 +380,21 @@ export default function CustomSolutions(props: Props) {
             accumsan
           </li>
         </ul>
-        <button className="button">Quero ser cliente</button>
+        <Button
+          fontSize="16px"
+          height="56px"
+          padding="16px 76px"
+          fontWeight={600}
+          width="282.72px"
+          margin="48px 0 0 0"
+          responsiveStyles={`
+          width: 303px;
+          text-align: center;
+        `}
+        >
+          Quero ser cliente
+        </Button>
+
         <div className="contact">
           <img src="/icons/icon-tel.svg" />
           Fale conosco
@@ -375,7 +409,15 @@ export default function CustomSolutions(props: Props) {
         <ScrollArrows>
           <img src="/icons/Arrow.svg" />
         </ScrollArrows>
-        <FloatingCard>
+        <FloatingCard
+          animate={{ y: [0, -14, 0] }}
+          transition={{
+            duration: 3,
+            ease: "easeInOut",
+            repeat: Infinity,
+            type: "tween",
+          }}
+        >
           <div className="row">
             <div className="text">
               <div className="title">R$ 999,90</div>

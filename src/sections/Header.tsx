@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+import { Button } from '../components/Button';
 
 const LogoWrapper = styled.div`
   display: flex;
@@ -61,28 +62,6 @@ const NavLink = styled.a<{ $scrolled?: boolean; $isInDrawer?: boolean }>`
     if ($isInDrawer) return '#ffffff';
     return $scrolled ? '#070514' : '#ffffff';
   }};
-
-`;
-
-const Button = styled.a`
-  background: #3b5bff;
-  color: #ffffff;
-  font-weight: 700;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: 0.3s;
-  font-size: 0.95rem;
-  font-family: 'Archivo', sans-serif;
-
-  &:hover {
-    background: #2848f0;
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-    text-align: center;
-  }
 `;
 
 const MenuIcon = styled.div<{ $scrolled: boolean }>`
@@ -106,7 +85,7 @@ const Overlay = styled(motion.div)`
   z-index: 1000;
 `;
 
-const MenuDrawer = styled(motion.div) <{ $scrolled: boolean }>`
+const MenuDrawer = styled(motion.div)<{ $scrolled: boolean }>`
   position: fixed;
   top: 0;
   right: 0;
@@ -124,10 +103,6 @@ const MenuDrawer = styled(motion.div) <{ $scrolled: boolean }>`
     color: ${({ $scrolled }) => ($scrolled ? '#070514' : '#ffffff')} !important;
   }
 
-  ${Button} {
-    color: #ffffff;
-  }
-
   button {
     margin-top: auto;
   }
@@ -141,9 +116,6 @@ const CloseIcon = styled.div<{ $scrolled: boolean }>`
   align-self: flex-end;
 `;
 
-
-
-
 interface HeaderProps {
   isScrolled: boolean;
 }
@@ -153,17 +125,16 @@ export default function Header({ isScrolled }: HeaderProps) {
   const router = useRouter();
 
   const handleNavClick = (id: string) => {
-    if (router.pathname !== "/") {
+    if (router.pathname !== '/') {
       router.push(`/#${id}`);
     } else {
       const el = document.getElementById(id);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
+        el.scrollIntoView({ behavior: 'smooth' });
       }
       setIsMenuOpen(false);
     }
   };
-
 
   return (
     <>
@@ -183,22 +154,31 @@ export default function Header({ isScrolled }: HeaderProps) {
         </LogoWrapper>
 
         <Nav>
-          <NavLink onClick={() => handleNavClick("quem-somos")} $scrolled={isScrolled}>
+          <NavLink onClick={() => handleNavClick('quem-somos')} $scrolled={isScrolled}>
             Quem somos
           </NavLink>
-          <NavLink onClick={() => handleNavClick("solucoes")} $scrolled={isScrolled}>
+          <NavLink onClick={() => handleNavClick('solucoes')} $scrolled={isScrolled}>
             Soluções
           </NavLink>
-          <NavLink onClick={() => handleNavClick("carreira")} $scrolled={isScrolled}>
+          <NavLink onClick={() => handleNavClick('carreira')} $scrolled={isScrolled}>
             Carreira
           </NavLink>
-          <NavLink onClick={() => handleNavClick("contato")} $scrolled={isScrolled}>
+          <NavLink onClick={() => handleNavClick('contato')} $scrolled={isScrolled}>
             Contato
           </NavLink>
-          <NavLink onClick={() => handleNavClick("suporte")} $scrolled={isScrolled}>
+          <NavLink onClick={() => handleNavClick('suporte')} $scrolled={isScrolled}>
             Suporte
           </NavLink>
-          <Button href="#">Cadastre-se</Button>
+
+          <Button
+            width="136.56px"
+            height="40px"
+            fontSize="15px"
+            fontWeight={700}
+            padding="0.75rem 1.5rem"
+          >
+            Cadastre-se
+          </Button>
         </Nav>
 
         <MenuIcon $scrolled={isScrolled} onClick={() => setIsMenuOpen(true)}>
@@ -227,22 +207,30 @@ export default function Header({ isScrolled }: HeaderProps) {
                 <FiX />
               </CloseIcon>
 
-              <NavLink onClick={() => { handleNavClick("quem-somos"); setIsMenuOpen(false); }} $isInDrawer>
+              <NavLink onClick={() => handleNavClick('quem-somos')} $isInDrawer>
                 Quem somos
               </NavLink>
-              <NavLink onClick={() => { handleNavClick("solucoes"); setIsMenuOpen(false); }} $isInDrawer>
+              <NavLink onClick={() => handleNavClick('solucoes')} $isInDrawer>
                 Soluções
               </NavLink>
-              <NavLink onClick={() => { handleNavClick("carreira"); setIsMenuOpen(false); }} $isInDrawer>
+              <NavLink onClick={() => handleNavClick('carreira')} $isInDrawer>
                 Carreira
               </NavLink>
-              <NavLink onClick={() => { handleNavClick("contato"); setIsMenuOpen(false); }} $isInDrawer>
+              <NavLink onClick={() => handleNavClick('contato')} $isInDrawer>
                 Contato
               </NavLink>
-              <NavLink onClick={() => { handleNavClick("suporte"); setIsMenuOpen(false); }} $isInDrawer>
+              <NavLink onClick={() => handleNavClick('suporte')} $isInDrawer>
                 Suporte
               </NavLink>
-              <Button href="#">Cadastre-se</Button>
+
+              <Button
+                width="100%"
+                fontWeight={700}
+                fontSize="16px"
+                padding="0.75rem 1.5rem"
+              >
+                Cadastre-se
+              </Button>
             </MenuDrawer>
           </>
         )}

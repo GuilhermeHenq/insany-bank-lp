@@ -40,7 +40,6 @@ export default class MyDocument extends Document {
         <Head>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta
             name="description"
             content="Participe da revolução do banco digital com o SmartMoney. Tecnologia, inovação e praticidade para você ou sua empresa."
@@ -66,7 +65,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
           <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-          <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+          <link rel="icon" href="/favicon-v2.ico" type="image/x-icon" />
         </Head>
         <body>
           <Main />

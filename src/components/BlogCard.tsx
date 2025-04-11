@@ -75,6 +75,8 @@ const Card = styled.div`
       }
     }
   }
+
+
 `;
 
 function formatDate(dateString: string) {
@@ -83,13 +85,22 @@ function formatDate(dateString: string) {
 }
 
 
-const BlogCard = ({ title, slug, imageUrl, date, authorName, authorAvatar }: BlogCardProps) => {
+const BlogCard = ({
+  postId,
+  title,
+  slug,
+  imageUrl,
+  date,
+  authorName,
+  authorAvatar,
+  ...rest
+}: BlogCardProps) => {
   const finalImage = imageUrl || "/images/avatar-1.png";
   const finalAvatar = authorAvatar || "/images/avatar-2.png";
 
   return (
     <Link href={`/posts/${slug}`} style={{ textDecoration: "none", color: "inherit" }}>
-      <Card>
+      <Card {...rest}>
         <img src={finalImage} alt={title} />
         <div className="content">
           <div className="meta">
@@ -108,6 +119,8 @@ const BlogCard = ({ title, slug, imageUrl, date, authorName, authorAvatar }: Blo
     </Link>
   );
 };
+
+
 
 
 export default BlogCard;
