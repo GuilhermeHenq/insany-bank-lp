@@ -3,7 +3,7 @@
 Este é um projeto desenvolvido com [Next.js](https://nextjs.org) e tipado com [TypeScript](https://www.typescriptlang.org/) como parte do **Desafio Front-End da Insany**.  
 O objetivo foi desenvolver uma Landing Page para um banco digital, com foco em responsividade, animações, performance e consumo de API.
 
-![Preview do Projeto](./public/cover.svg)
+![Preview do Projeto](./public/Cover.svg)
 
 ---
 
