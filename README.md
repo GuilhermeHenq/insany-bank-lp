@@ -30,7 +30,7 @@ O objetivo foi desenvolver uma Landing Page para um banco digital, com foco em r
 
 ---
 
-## ▶️ Getting Started
+## ▶ Getting Started
 
 Primeiro, instale as dependências:
 
@@ -38,3 +38,7 @@ Primeiro, instale as dependências:
 npm install
 # ou
 yarn install
+
+->
+
+npm run dev
