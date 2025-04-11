@@ -57,6 +57,7 @@ const NavLink = styled.a<{ $scrolled?: boolean; $isInDrawer?: boolean }>`
   text-decoration: none;
   transition: 0.3s;
   font-family: 'Archivo', sans-serif;
+  cursor: pointer;
 
   color: ${({ $scrolled, $isInDrawer }) => {
     if ($isInDrawer) return '#ffffff';
