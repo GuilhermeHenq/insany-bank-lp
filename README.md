@@ -39,6 +39,6 @@ npm install
 # ou
 yarn install
 
+->
 
-```bash
 npm run dev
