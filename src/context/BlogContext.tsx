@@ -10,15 +10,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     async function fetchPosts() {
-      try {
-        const response = await fetch("https://devblog.insanydesign.com/wp-json/wp/v2/posts?_embed");  
-        const data = await response.json();
-        setPosts(data);
-      } catch (error) {
-        console.error("Erro ao buscar posts:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      setPosts([]); // deixa o blog vazio
     }
 
     fetchPosts();
