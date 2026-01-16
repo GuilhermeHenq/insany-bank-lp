@@ -3,10 +3,6 @@ import LeadForm from "../components/LeadForm";
 import { CountUp } from "../components/CountUp"; 
 
 
-type CountUpProps = {
-  to: number;
-  duration?: number;
-};
 
 
 const Section = styled.section`

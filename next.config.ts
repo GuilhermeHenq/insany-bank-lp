@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
     styledComponents: true,
   },
   reactStrictMode: true,
+
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;

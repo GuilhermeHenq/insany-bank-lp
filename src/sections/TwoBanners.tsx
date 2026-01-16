@@ -72,38 +72,6 @@ const Description = styled.p`
   }
 `;
 
-const PrimaryButton = styled.button`
-  width: 237px;
-  height: 56px;
-  padding: 12px 24px;
-  background-color: #2563eb;
-  color: white;
-  font-weight: 600;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  line-height: 150%;
-
-  &:hover {
-    background-color: #1e40af;
-  }
-`;
-
-const OutlinedButton = styled(PrimaryButton)`
-  background-color: transparent;
-  color: #2563eb;
-  border: 1px solid #2563eb;
-
-  &:hover {
-    background-color: #f0f4ff;
-  }
-
-  @media (max-width: 768px) {
-    margin-bottom: 64px;
-  }
-`;
-
 const Divider = styled.div`
   width: 4px;
   height: 340px;
